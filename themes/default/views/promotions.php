@@ -26,9 +26,15 @@
             </div>
 
             <div class="inner cover">
-                <h1 class="cover-heading">Thank you for your visit!!!</h1>
-                <p class="lead">Please come again.</p>
-                <p class="lead">If you are happy with our services, please tell to your friends otherwise let us know so that we can improve.</p>
+                <h1 class="cover-heading">Agradecemos a sua visita!!!</h1>
+                <p class="lead">Por favor, venha novamente.</p>
+                <div id="relogio-ditital">
+                <div id="horas"></div>
+                <div id="minutos"></div>
+                <div id="segundos"></div>
+                <div id="ampm"></div>
+                </div>
+                <p class="lead">Se você estiver feliz com nossos serviços, conte seus amigos de outra forma, informe -nos para que possamos melhorar.</p>
 
                 <!-- <small>
                     <code>
@@ -48,7 +54,37 @@
     </div>
 
 </div>
+<script>
+     setInterval(() => {
+    // Relógio Digital
+    const horas = document.querySelector('#horas');
+    const minutos = document.querySelector('#minutos');
+    const segundos = document.querySelector('#segundos');
+    const ampm = document.querySelector('#ampm');
 
+    let h = new Date().getHours();
+    let m = new Date().getMinutes();
+    let s = new Date().getSeconds();
+    let am = "AM";
+
+    // Am ou PM
+    if (h > 12) {
+      // h = h - 12     .... deixar a hora com só com os 12 números
+      am = "PM"
+    }
+
+    // Inserir zero
+    h = (h < 10) ? "0" + h : h;
+    m = (m < 10) ? "0" + m : m;
+    s = (s < 10) ? "0" + s : s;
+
+    horas.innerHTML = h + ":";
+    minutos.innerHTML = m + ":";
+    segundos.innerHTML = s + "&nbsp";
+    ampm.innerHTML = am;
+})
+
+</script>
 <script src="<?= $assets ?>plugins/jQuery/jQuery-2.1.4.min.js" type="text/javascript"></script>
 <script src="<?= $assets ?>bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 </body>

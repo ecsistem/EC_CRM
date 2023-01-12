@@ -181,7 +181,7 @@ $('#chart2').highcharts({
                 <div class="col-md-4">
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title"><?= lang('top_products').' ('.date('F Y').')'; ?></h3>
+                            <h3 class="box-title"><?=  lang('top_products').' ('.date('F Y').')'; ?></h3>
                         </div>
                         <div class="box-body">
                             <div id="chart2" style="height:300px;"></div>

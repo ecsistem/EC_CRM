@@ -10269,7 +10269,7 @@ button.close {
     margin: 1px;
     text-indent: -999px;
     cursor: pointer;
-    background-color: #000\9;
+    background-color: #000;
     background-color: rgba(0, 0, 0, 0);
     border: 1px solid #fff;
     border-radius: 10px
@@ -16069,8 +16069,9 @@ table.text-center th {
 .login-box-body,
 .register-box-body {
     background: #fff;
-    padding: 20px;
+    padding: 20px 60px;
     border-top: 0;
+    border-radius: 9px;
     color: #666
 }
 
@@ -18128,16 +18129,17 @@ table.text-center th {
 }
 
 .skin-green .sidebar a {
-    color: #ffffff
+    color: #ffffff;
 }
 
 .skin-green .treeview-menu>li>a {
-    color: #ffffff
+    color: #ffffff;
+    background: #337ab7
 }
 
 .skin-green .treeview-menu>li.active>a,
 .skin-green .treeview-menu>li>a:hover {
-    color: #fff
+    color: #fff;
 }
 
 .skin-green .sidebar-form {

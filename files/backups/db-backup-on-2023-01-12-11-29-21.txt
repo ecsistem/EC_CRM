@@ -1,0 +1,856 @@
+#
+# TABLE STRUCTURE FOR: tec_categories
+#
+
+DROP TABLE IF EXISTS `tec_categories`;
+
+CREATE TABLE `tec_categories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(20) NOT NULL,
+  `name` varchar(55) NOT NULL,
+  `image` varchar(100) DEFAULT 'no_image.png',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+INSERT INTO `tec_categories` (`id`, `code`, `name`, `image`) VALUES (1, 'G01', 'General', 'no_image.png');
+INSERT INTO `tec_categories` (`id`, `code`, `name`, `image`) VALUES (2, 'Ingressos', 'Ingressos', 'no_image.png');
+
+
+#
+# TABLE STRUCTURE FOR: tec_combo_items
+#
+
+DROP TABLE IF EXISTS `tec_combo_items`;
+
+CREATE TABLE `tec_combo_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `item_code` varchar(20) NOT NULL,
+  `quantity` decimal(12,4) NOT NULL,
+  `price` decimal(25,4) DEFAULT NULL,
+  `cost` decimal(25,4) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: tec_customers
+#
+
+DROP TABLE IF EXISTS `tec_customers`;
+
+CREATE TABLE `tec_customers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(55) NOT NULL,
+  `cf1` varchar(255) NOT NULL,
+  `cf2` varchar(255) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `store_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+INSERT INTO `tec_customers` (`id`, `name`, `cf1`, `cf2`, `phone`, `email`, `store_id`) VALUES (1, 'Cliente Padrão', '', '', '0000-0000', 'cliente@edsoncosta.tech', NULL);
+
+
+#
+# TABLE STRUCTURE FOR: tec_expenses
+#
+
+DROP TABLE IF EXISTS `tec_expenses`;
+
+CREATE TABLE `tec_expenses` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `reference` varchar(50) NOT NULL,
+  `amount` decimal(25,4) NOT NULL,
+  `note` varchar(1000) DEFAULT NULL,
+  `created_by` varchar(55) NOT NULL,
+  `attachment` varchar(55) DEFAULT NULL,
+  `store_id` int(11) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: tec_gift_cards
+#
+
+DROP TABLE IF EXISTS `tec_gift_cards`;
+
+CREATE TABLE `tec_gift_cards` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `card_no` varchar(20) NOT NULL,
+  `value` decimal(25,4) NOT NULL,
+  `customer_id` int(11) DEFAULT NULL,
+  `balance` decimal(25,4) NOT NULL,
+  `expiry` date DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `store_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `card_no` (`card_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: tec_groups
+#
+
+DROP TABLE IF EXISTS `tec_groups`;
+
+CREATE TABLE `tec_groups` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL,
+  `description` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+INSERT INTO `tec_groups` (`id`, `name`, `description`) VALUES (1, 'admin', 'Administrator');
+INSERT INTO `tec_groups` (`id`, `name`, `description`) VALUES (2, 'staff', 'Staff');
+
+
+#
+# TABLE STRUCTURE FOR: tec_login_attempts
+#
+
+DROP TABLE IF EXISTS `tec_login_attempts`;
+
+CREATE TABLE `tec_login_attempts` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `ip_address` varbinary(16) NOT NULL,
+  `login` varchar(100) NOT NULL,
+  `time` int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: tec_payments
+#
+
+DROP TABLE IF EXISTS `tec_payments`;
+
+CREATE TABLE `tec_payments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` timestamp NULL DEFAULT current_timestamp(),
+  `sale_id` int(11) DEFAULT NULL,
+  `customer_id` int(11) DEFAULT NULL,
+  `transaction_id` varchar(50) DEFAULT NULL,
+  `paid_by` varchar(20) NOT NULL,
+  `cheque_no` varchar(20) DEFAULT NULL,
+  `cc_no` varchar(20) DEFAULT NULL,
+  `cc_holder` varchar(25) DEFAULT NULL,
+  `cc_month` varchar(2) DEFAULT NULL,
+  `cc_year` varchar(4) DEFAULT NULL,
+  `cc_type` varchar(20) DEFAULT NULL,
+  `amount` decimal(25,4) NOT NULL,
+  `currency` varchar(3) DEFAULT NULL,
+  `created_by` int(11) NOT NULL,
+  `attachment` varchar(55) DEFAULT NULL,
+  `note` varchar(1000) DEFAULT NULL,
+  `pos_paid` decimal(25,4) DEFAULT 0.0000,
+  `pos_balance` decimal(25,4) DEFAULT 0.0000,
+  `gc_no` varchar(20) DEFAULT NULL,
+  `reference` varchar(50) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `store_id` int(11) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+
+INSERT INTO `tec_payments` (`id`, `date`, `sale_id`, `customer_id`, `transaction_id`, `paid_by`, `cheque_no`, `cc_no`, `cc_holder`, `cc_month`, `cc_year`, `cc_type`, `amount`, `currency`, `created_by`, `attachment`, `note`, `pos_paid`, `pos_balance`, `gc_no`, `reference`, `updated_by`, `updated_at`, `store_id`) VALUES (1, '2022-06-17 14:40:01', 1, 1, NULL, 'cash', '', '', '', '', '', '', '10.5000', NULL, 1, NULL, '', '20.0000', '9.5000', '', NULL, NULL, NULL, 1);
+INSERT INTO `tec_payments` (`id`, `date`, `sale_id`, `customer_id`, `transaction_id`, `paid_by`, `cheque_no`, `cc_no`, `cc_holder`, `cc_month`, `cc_year`, `cc_type`, `amount`, `currency`, `created_by`, `attachment`, `note`, `pos_paid`, `pos_balance`, `gc_no`, `reference`, `updated_by`, `updated_at`, `store_id`) VALUES (2, '2022-06-17 16:48:15', 2, 1, NULL, 'cash', '', '', '', '', '', '', '10.5000', NULL, 1, NULL, '', '100.0000', '89.5000', '', NULL, NULL, NULL, 1);
+INSERT INTO `tec_payments` (`id`, `date`, `sale_id`, `customer_id`, `transaction_id`, `paid_by`, `cheque_no`, `cc_no`, `cc_holder`, `cc_month`, `cc_year`, `cc_type`, `amount`, `currency`, `created_by`, `attachment`, `note`, `pos_paid`, `pos_balance`, `gc_no`, `reference`, `updated_by`, `updated_at`, `store_id`) VALUES (3, '2022-06-17 18:40:05', 3, 1, NULL, 'cash', '', '', '', '', '', '', '16.0000', NULL, 1, NULL, '', '50.0000', '34.0000', '', NULL, NULL, NULL, 1);
+INSERT INTO `tec_payments` (`id`, `date`, `sale_id`, `customer_id`, `transaction_id`, `paid_by`, `cheque_no`, `cc_no`, `cc_holder`, `cc_month`, `cc_year`, `cc_type`, `amount`, `currency`, `created_by`, `attachment`, `note`, `pos_paid`, `pos_balance`, `gc_no`, `reference`, `updated_by`, `updated_at`, `store_id`) VALUES (4, '2022-06-17 18:41:09', 4, 1, NULL, 'cash', '', '', '', '', '', '', '31.5000', NULL, 1, NULL, '', '31.5000', '0.0000', '', NULL, NULL, NULL, 1);
+INSERT INTO `tec_payments` (`id`, `date`, `sale_id`, `customer_id`, `transaction_id`, `paid_by`, `cheque_no`, `cc_no`, `cc_holder`, `cc_month`, `cc_year`, `cc_type`, `amount`, `currency`, `created_by`, `attachment`, `note`, `pos_paid`, `pos_balance`, `gc_no`, `reference`, `updated_by`, `updated_at`, `store_id`) VALUES (5, '2022-09-24 12:59:58', 5, 1, NULL, 'cash', '', '', '', '', '', '', '9.5000', NULL, 1, NULL, '', '20.0000', '10.5000', '', NULL, NULL, NULL, 1);
+INSERT INTO `tec_payments` (`id`, `date`, `sale_id`, `customer_id`, `transaction_id`, `paid_by`, `cheque_no`, `cc_no`, `cc_holder`, `cc_month`, `cc_year`, `cc_type`, `amount`, `currency`, `created_by`, `attachment`, `note`, `pos_paid`, `pos_balance`, `gc_no`, `reference`, `updated_by`, `updated_at`, `store_id`) VALUES (6, '2022-09-24 13:17:56', 6, 1, NULL, 'cash', '', '', '', '', '', '', '10.5000', NULL, 1, NULL, '', '20.0000', '9.5000', '', NULL, NULL, NULL, 1);
+INSERT INTO `tec_payments` (`id`, `date`, `sale_id`, `customer_id`, `transaction_id`, `paid_by`, `cheque_no`, `cc_no`, `cc_holder`, `cc_month`, `cc_year`, `cc_type`, `amount`, `currency`, `created_by`, `attachment`, `note`, `pos_paid`, `pos_balance`, `gc_no`, `reference`, `updated_by`, `updated_at`, `store_id`) VALUES (7, '2022-09-24 13:40:29', 7, 1, NULL, 'cash', '', '', '', '', '', '', '100.0000', NULL, 1, NULL, '', '200.0000', '100.0000', '', NULL, NULL, NULL, 1);
+INSERT INTO `tec_payments` (`id`, `date`, `sale_id`, `customer_id`, `transaction_id`, `paid_by`, `cheque_no`, `cc_no`, `cc_holder`, `cc_month`, `cc_year`, `cc_type`, `amount`, `currency`, `created_by`, `attachment`, `note`, `pos_paid`, `pos_balance`, `gc_no`, `reference`, `updated_by`, `updated_at`, `store_id`) VALUES (8, '2022-09-24 20:43:57', 8, 1, NULL, 'cash', '', '', '', '', '', '', '357.0000', NULL, 1, NULL, '', '450.0000', '93.0000', '', NULL, NULL, NULL, 1);
+INSERT INTO `tec_payments` (`id`, `date`, `sale_id`, `customer_id`, `transaction_id`, `paid_by`, `cheque_no`, `cc_no`, `cc_holder`, `cc_month`, `cc_year`, `cc_type`, `amount`, `currency`, `created_by`, `attachment`, `note`, `pos_paid`, `pos_balance`, `gc_no`, `reference`, `updated_by`, `updated_at`, `store_id`) VALUES (9, '2022-09-26 10:12:36', 9, 1, NULL, 'cash', '', '', '', '', '', '', '10.5000', NULL, 1, NULL, '', '100.0000', '89.5000', '', NULL, NULL, NULL, 1);
+INSERT INTO `tec_payments` (`id`, `date`, `sale_id`, `customer_id`, `transaction_id`, `paid_by`, `cheque_no`, `cc_no`, `cc_holder`, `cc_month`, `cc_year`, `cc_type`, `amount`, `currency`, `created_by`, `attachment`, `note`, `pos_paid`, `pos_balance`, `gc_no`, `reference`, `updated_by`, `updated_at`, `store_id`) VALUES (10, '2022-09-26 10:18:21', 10, 1, NULL, 'cash', '', '', '', '', '', '', '10.5000', NULL, 1, NULL, '', '10.5000', '0.0000', '', NULL, NULL, NULL, 1);
+INSERT INTO `tec_payments` (`id`, `date`, `sale_id`, `customer_id`, `transaction_id`, `paid_by`, `cheque_no`, `cc_no`, `cc_holder`, `cc_month`, `cc_year`, `cc_type`, `amount`, `currency`, `created_by`, `attachment`, `note`, `pos_paid`, `pos_balance`, `gc_no`, `reference`, `updated_by`, `updated_at`, `store_id`) VALUES (11, '2022-09-26 10:20:35', 11, 1, NULL, 'cash', '', '', '', '', '', '', '10.5000', NULL, 1, NULL, '', '10.5000', '0.0000', '', NULL, NULL, NULL, 1);
+INSERT INTO `tec_payments` (`id`, `date`, `sale_id`, `customer_id`, `transaction_id`, `paid_by`, `cheque_no`, `cc_no`, `cc_holder`, `cc_month`, `cc_year`, `cc_type`, `amount`, `currency`, `created_by`, `attachment`, `note`, `pos_paid`, `pos_balance`, `gc_no`, `reference`, `updated_by`, `updated_at`, `store_id`) VALUES (12, '2022-09-26 21:23:00', 12, 1, NULL, 'cash', '', '', '', '', '', '', '10.5000', NULL, 1, NULL, '', '10.5000', '0.0000', '', NULL, NULL, NULL, 1);
+INSERT INTO `tec_payments` (`id`, `date`, `sale_id`, `customer_id`, `transaction_id`, `paid_by`, `cheque_no`, `cc_no`, `cc_holder`, `cc_month`, `cc_year`, `cc_type`, `amount`, `currency`, `created_by`, `attachment`, `note`, `pos_paid`, `pos_balance`, `gc_no`, `reference`, `updated_by`, `updated_at`, `store_id`) VALUES (13, '2022-09-26 21:23:24', 13, 1, NULL, 'cash', '', '', '', '', '', '', '10.5000', NULL, 1, NULL, '', '10.5000', '0.0000', '', NULL, NULL, NULL, 1);
+INSERT INTO `tec_payments` (`id`, `date`, `sale_id`, `customer_id`, `transaction_id`, `paid_by`, `cheque_no`, `cc_no`, `cc_holder`, `cc_month`, `cc_year`, `cc_type`, `amount`, `currency`, `created_by`, `attachment`, `note`, `pos_paid`, `pos_balance`, `gc_no`, `reference`, `updated_by`, `updated_at`, `store_id`) VALUES (14, '2023-01-12 11:23:08', 14, 1, NULL, 'cash', '', '', '', '', '', '', '10.0000', NULL, 1, NULL, '', '35.0000', '25.0000', '', NULL, NULL, NULL, 1);
+
+
+#
+# TABLE STRUCTURE FOR: tec_printers
+#
+
+DROP TABLE IF EXISTS `tec_printers`;
+
+CREATE TABLE `tec_printers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(55) NOT NULL,
+  `type` varchar(25) NOT NULL,
+  `profile` varchar(25) NOT NULL,
+  `char_per_line` tinyint(3) unsigned DEFAULT NULL,
+  `path` varchar(255) DEFAULT NULL,
+  `ip_address` varbinary(45) DEFAULT NULL,
+  `port` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+INSERT INTO `tec_printers` (`id`, `title`, `type`, `profile`, `char_per_line`, `path`, `ip_address`, `port`) VALUES (1, 'XPrinter', 'network', 'default', 45, '', '192.168.1.200', '9100');
+
+
+#
+# TABLE STRUCTURE FOR: tec_product_store_qty
+#
+
+DROP TABLE IF EXISTS `tec_product_store_qty`;
+
+CREATE TABLE `tec_product_store_qty` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `quantity` decimal(15,4) NOT NULL DEFAULT 0.0000,
+  `price` decimal(25,4) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`),
+  KEY `store_id` (`store_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+INSERT INTO `tec_product_store_qty` (`id`, `product_id`, `store_id`, `quantity`, `price`) VALUES (1, 1, 1, '44.0000', '10.0000');
+INSERT INTO `tec_product_store_qty` (`id`, `product_id`, `store_id`, `quantity`, `price`) VALUES (2, 2, 1, '48.0000', '20.0000');
+
+
+#
+# TABLE STRUCTURE FOR: tec_products
+#
+
+DROP TABLE IF EXISTS `tec_products`;
+
+CREATE TABLE `tec_products` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(50) NOT NULL,
+  `name` char(255) NOT NULL,
+  `category_id` int(11) NOT NULL DEFAULT 1,
+  `price` decimal(25,4) NOT NULL,
+  `image` varchar(255) DEFAULT 'no_image.png',
+  `tax` varchar(20) DEFAULT NULL,
+  `cost` decimal(25,4) DEFAULT NULL,
+  `tax_method` tinyint(1) DEFAULT 1,
+  `quantity` decimal(15,4) DEFAULT 0.0000,
+  `barcode_symbology` varchar(20) NOT NULL DEFAULT 'code39',
+  `type` varchar(20) NOT NULL DEFAULT 'standard',
+  `details` text DEFAULT NULL,
+  `alert_quantity` decimal(10,4) DEFAULT 0.0000,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `code` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+INSERT INTO `tec_products` (`id`, `code`, `name`, `category_id`, `price`, `image`, `tax`, `cost`, `tax_method`, `quantity`, `barcode_symbology`, `type`, `details`, `alert_quantity`) VALUES (1, '010110101010101', 'teste', 1, '10.0000', 'no_image.png', '0', '5.0000', 0, '0.0000', 'code128', 'standard', '', '4.0000');
+INSERT INTO `tec_products` (`id`, `code`, `name`, `category_id`, `price`, `image`, `tax`, `cost`, `tax_method`, `quantity`, `barcode_symbology`, `type`, `details`, `alert_quantity`) VALUES (2, '240920222022', 'IDF em Vegas', 2, '20.0000', 'no_image.png', '0', '10.0000', 0, '0.0000', 'code128', 'standard', '', '50.0000');
+
+
+#
+# TABLE STRUCTURE FOR: tec_purchase_items
+#
+
+DROP TABLE IF EXISTS `tec_purchase_items`;
+
+CREATE TABLE `tec_purchase_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `purchase_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `quantity` decimal(15,4) NOT NULL,
+  `cost` decimal(25,4) NOT NULL,
+  `subtotal` decimal(25,4) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: tec_purchases
+#
+
+DROP TABLE IF EXISTS `tec_purchases`;
+
+CREATE TABLE `tec_purchases` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `reference` varchar(55) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `note` varchar(1000) NOT NULL,
+  `total` decimal(25,4) NOT NULL,
+  `attachment` varchar(255) DEFAULT NULL,
+  `supplier_id` int(11) DEFAULT NULL,
+  `received` tinyint(1) DEFAULT NULL,
+  `created_by` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: tec_registers
+#
+
+DROP TABLE IF EXISTS `tec_registers`;
+
+CREATE TABLE `tec_registers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `user_id` int(11) NOT NULL,
+  `cash_in_hand` decimal(25,4) NOT NULL,
+  `status` varchar(10) NOT NULL,
+  `total_cash` decimal(25,4) DEFAULT NULL,
+  `total_cheques` int(11) DEFAULT NULL,
+  `total_cc_slips` int(11) DEFAULT NULL,
+  `total_cash_submitted` decimal(25,4) DEFAULT NULL,
+  `total_cheques_submitted` int(11) DEFAULT NULL,
+  `total_cc_slips_submitted` int(11) DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `closed_at` timestamp NULL DEFAULT NULL,
+  `transfer_opened_bills` varchar(50) DEFAULT NULL,
+  `closed_by` int(11) DEFAULT NULL,
+  `store_id` int(11) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+INSERT INTO `tec_registers` (`id`, `date`, `user_id`, `cash_in_hand`, `status`, `total_cash`, `total_cheques`, `total_cc_slips`, `total_cash_submitted`, `total_cheques_submitted`, `total_cc_slips_submitted`, `note`, `closed_at`, `transfer_opened_bills`, `closed_by`, `store_id`) VALUES (1, '2019-03-19 15:19:22', 1, '200.0000', 'close', '221.0000', 0, 0, '221.0000', 0, 0, '', '2022-06-17 17:40:19', NULL, 1, 1);
+INSERT INTO `tec_registers` (`id`, `date`, `user_id`, `cash_in_hand`, `status`, `total_cash`, `total_cheques`, `total_cc_slips`, `total_cash_submitted`, `total_cheques_submitted`, `total_cc_slips_submitted`, `note`, `closed_at`, `transfer_opened_bills`, `closed_by`, `store_id`) VALUES (2, '2022-06-17 17:41:29', 1, '0.0000', 'close', '524.5000', 0, 0, '524.5000', 0, 0, '', '2022-09-24 20:47:24', NULL, 1, 1);
+INSERT INTO `tec_registers` (`id`, `date`, `user_id`, `cash_in_hand`, `status`, `total_cash`, `total_cheques`, `total_cc_slips`, `total_cash_submitted`, `total_cheques_submitted`, `total_cc_slips_submitted`, `note`, `closed_at`, `transfer_opened_bills`, `closed_by`, `store_id`) VALUES (3, '2022-09-24 20:47:34', 1, '100.0000', 'open', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
+INSERT INTO `tec_registers` (`id`, `date`, `user_id`, `cash_in_hand`, `status`, `total_cash`, `total_cheques`, `total_cc_slips`, `total_cash_submitted`, `total_cheques_submitted`, `total_cc_slips_submitted`, `note`, `closed_at`, `transfer_opened_bills`, `closed_by`, `store_id`) VALUES (4, '2022-09-25 12:29:28', 2, '100.0000', 'close', '100.0000', 0, 0, '100.0000', 0, 0, '', '2022-09-25 12:32:28', NULL, 2, 1);
+INSERT INTO `tec_registers` (`id`, `date`, `user_id`, `cash_in_hand`, `status`, `total_cash`, `total_cheques`, `total_cc_slips`, `total_cash_submitted`, `total_cheques_submitted`, `total_cc_slips_submitted`, `note`, `closed_at`, `transfer_opened_bills`, `closed_by`, `store_id`) VALUES (5, '2022-09-26 10:28:48', 2, '100.0000', 'open', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
+
+
+#
+# TABLE STRUCTURE FOR: tec_sale_items
+#
+
+DROP TABLE IF EXISTS `tec_sale_items`;
+
+CREATE TABLE `tec_sale_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sale_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `quantity` decimal(15,4) NOT NULL,
+  `unit_price` decimal(25,4) NOT NULL,
+  `net_unit_price` decimal(25,4) NOT NULL,
+  `discount` varchar(20) DEFAULT NULL,
+  `item_discount` decimal(25,4) DEFAULT NULL,
+  `tax` int(20) DEFAULT NULL,
+  `item_tax` decimal(25,4) DEFAULT NULL,
+  `subtotal` decimal(25,4) NOT NULL,
+  `real_unit_price` decimal(25,4) DEFAULT NULL,
+  `cost` decimal(25,4) DEFAULT 0.0000,
+  `product_code` varchar(50) DEFAULT NULL,
+  `product_name` varchar(50) DEFAULT NULL,
+  `comment` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+
+INSERT INTO `tec_sale_items` (`id`, `sale_id`, `product_id`, `quantity`, `unit_price`, `net_unit_price`, `discount`, `item_discount`, `tax`, `item_tax`, `subtotal`, `real_unit_price`, `cost`, `product_code`, `product_name`, `comment`) VALUES (1, 1, 1, '1.0000', '10.0000', '10.0000', '0', '0.0000', 0, '0.0000', '10.0000', '10.0000', '5.0000', '010110101010101', 'teste', '');
+INSERT INTO `tec_sale_items` (`id`, `sale_id`, `product_id`, `quantity`, `unit_price`, `net_unit_price`, `discount`, `item_discount`, `tax`, `item_tax`, `subtotal`, `real_unit_price`, `cost`, `product_code`, `product_name`, `comment`) VALUES (2, 2, 1, '1.0000', '10.0000', '10.0000', '0', '0.0000', 0, '0.0000', '10.0000', '10.0000', '5.0000', '010110101010101', 'teste', '');
+INSERT INTO `tec_sale_items` (`id`, `sale_id`, `product_id`, `quantity`, `unit_price`, `net_unit_price`, `discount`, `item_discount`, `tax`, `item_tax`, `subtotal`, `real_unit_price`, `cost`, `product_code`, `product_name`, `comment`) VALUES (3, 3, 1, '2.0000', '10.0000', '10.0000', '0', '0.0000', 0, '0.0000', '20.0000', '10.0000', '5.0000', '010110101010101', 'teste', '');
+INSERT INTO `tec_sale_items` (`id`, `sale_id`, `product_id`, `quantity`, `unit_price`, `net_unit_price`, `discount`, `item_discount`, `tax`, `item_tax`, `subtotal`, `real_unit_price`, `cost`, `product_code`, `product_name`, `comment`) VALUES (4, 4, 1, '3.0000', '10.0000', '10.0000', '0', '0.0000', 0, '0.0000', '30.0000', '10.0000', '5.0000', '010110101010101', 'teste', '');
+INSERT INTO `tec_sale_items` (`id`, `sale_id`, `product_id`, `quantity`, `unit_price`, `net_unit_price`, `discount`, `item_discount`, `tax`, `item_tax`, `subtotal`, `real_unit_price`, `cost`, `product_code`, `product_name`, `comment`) VALUES (5, 5, 1, '1.0000', '10.0000', '10.0000', '0', '0.0000', 0, '0.0000', '10.0000', '10.0000', '5.0000', '010110101010101', 'teste', '');
+INSERT INTO `tec_sale_items` (`id`, `sale_id`, `product_id`, `quantity`, `unit_price`, `net_unit_price`, `discount`, `item_discount`, `tax`, `item_tax`, `subtotal`, `real_unit_price`, `cost`, `product_code`, `product_name`, `comment`) VALUES (6, 6, 1, '1.0000', '10.0000', '10.0000', '0', '0.0000', 0, '0.0000', '10.0000', '10.0000', '5.0000', '010110101010101', 'teste', '');
+INSERT INTO `tec_sale_items` (`id`, `sale_id`, `product_id`, `quantity`, `unit_price`, `net_unit_price`, `discount`, `item_discount`, `tax`, `item_tax`, `subtotal`, `real_unit_price`, `cost`, `product_code`, `product_name`, `comment`) VALUES (7, 7, 2, '5.0000', '20.0000', '20.0000', '0', '0.0000', 0, '0.0000', '100.0000', '20.0000', '10.0000', '240920222022', 'IDF em Vegas', '');
+INSERT INTO `tec_sale_items` (`id`, `sale_id`, `product_id`, `quantity`, `unit_price`, `net_unit_price`, `discount`, `item_discount`, `tax`, `item_tax`, `subtotal`, `real_unit_price`, `cost`, `product_code`, `product_name`, `comment`) VALUES (8, 8, 1, '30.0000', '10.0000', '10.0000', '0', '0.0000', 0, '0.0000', '300.0000', '10.0000', '5.0000', '010110101010101', 'teste', '');
+INSERT INTO `tec_sale_items` (`id`, `sale_id`, `product_id`, `quantity`, `unit_price`, `net_unit_price`, `discount`, `item_discount`, `tax`, `item_tax`, `subtotal`, `real_unit_price`, `cost`, `product_code`, `product_name`, `comment`) VALUES (9, 8, 2, '2.0000', '20.0000', '20.0000', '0', '0.0000', 0, '0.0000', '40.0000', '20.0000', '10.0000', '240920222022', 'IDF em Vegas', '');
+INSERT INTO `tec_sale_items` (`id`, `sale_id`, `product_id`, `quantity`, `unit_price`, `net_unit_price`, `discount`, `item_discount`, `tax`, `item_tax`, `subtotal`, `real_unit_price`, `cost`, `product_code`, `product_name`, `comment`) VALUES (10, 9, 1, '1.0000', '10.0000', '10.0000', '0', '0.0000', 0, '0.0000', '10.0000', '10.0000', '5.0000', '010110101010101', 'teste', '');
+INSERT INTO `tec_sale_items` (`id`, `sale_id`, `product_id`, `quantity`, `unit_price`, `net_unit_price`, `discount`, `item_discount`, `tax`, `item_tax`, `subtotal`, `real_unit_price`, `cost`, `product_code`, `product_name`, `comment`) VALUES (11, 10, 1, '1.0000', '10.0000', '10.0000', '0', '0.0000', 0, '0.0000', '10.0000', '10.0000', '5.0000', '010110101010101', 'teste', '');
+INSERT INTO `tec_sale_items` (`id`, `sale_id`, `product_id`, `quantity`, `unit_price`, `net_unit_price`, `discount`, `item_discount`, `tax`, `item_tax`, `subtotal`, `real_unit_price`, `cost`, `product_code`, `product_name`, `comment`) VALUES (12, 11, 1, '1.0000', '10.0000', '10.0000', '0', '0.0000', 0, '0.0000', '10.0000', '10.0000', '5.0000', '010110101010101', 'teste', '');
+INSERT INTO `tec_sale_items` (`id`, `sale_id`, `product_id`, `quantity`, `unit_price`, `net_unit_price`, `discount`, `item_discount`, `tax`, `item_tax`, `subtotal`, `real_unit_price`, `cost`, `product_code`, `product_name`, `comment`) VALUES (13, 12, 1, '1.0000', '10.0000', '10.0000', '0', '0.0000', 0, '0.0000', '10.0000', '10.0000', '5.0000', '010110101010101', 'teste', '');
+INSERT INTO `tec_sale_items` (`id`, `sale_id`, `product_id`, `quantity`, `unit_price`, `net_unit_price`, `discount`, `item_discount`, `tax`, `item_tax`, `subtotal`, `real_unit_price`, `cost`, `product_code`, `product_name`, `comment`) VALUES (14, 13, 1, '1.0000', '10.0000', '10.0000', '0', '0.0000', 0, '0.0000', '10.0000', '10.0000', '5.0000', '010110101010101', 'teste', '');
+INSERT INTO `tec_sale_items` (`id`, `sale_id`, `product_id`, `quantity`, `unit_price`, `net_unit_price`, `discount`, `item_discount`, `tax`, `item_tax`, `subtotal`, `real_unit_price`, `cost`, `product_code`, `product_name`, `comment`) VALUES (15, 14, 1, '1.0000', '10.0000', '10.0000', '0', '0.0000', 0, '0.0000', '10.0000', '10.0000', '5.0000', '010110101010101', 'teste', '');
+
+
+#
+# TABLE STRUCTURE FOR: tec_sales
+#
+
+DROP TABLE IF EXISTS `tec_sales`;
+
+CREATE TABLE `tec_sales` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` datetime NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `customer_name` varchar(55) NOT NULL,
+  `total` decimal(25,4) NOT NULL,
+  `product_discount` decimal(25,4) DEFAULT NULL,
+  `order_discount_id` varchar(20) DEFAULT NULL,
+  `order_discount` decimal(25,4) DEFAULT NULL,
+  `total_discount` decimal(25,4) DEFAULT NULL,
+  `product_tax` decimal(25,4) DEFAULT NULL,
+  `order_tax_id` varchar(20) DEFAULT NULL,
+  `order_tax` decimal(25,4) DEFAULT NULL,
+  `total_tax` decimal(25,4) DEFAULT NULL,
+  `grand_total` decimal(25,4) NOT NULL,
+  `total_items` int(11) DEFAULT NULL,
+  `total_quantity` decimal(15,4) DEFAULT NULL,
+  `paid` decimal(25,4) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `note` varchar(1000) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `rounding` decimal(10,4) DEFAULT NULL,
+  `store_id` int(11) NOT NULL DEFAULT 1,
+  `hold_ref` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+
+INSERT INTO `tec_sales` (`id`, `date`, `customer_id`, `customer_name`, `total`, `product_discount`, `order_discount_id`, `order_discount`, `total_discount`, `product_tax`, `order_tax_id`, `order_tax`, `total_tax`, `grand_total`, `total_items`, `total_quantity`, `paid`, `created_by`, `updated_by`, `updated_at`, `note`, `status`, `rounding`, `store_id`, `hold_ref`) VALUES (1, '2022-06-17 14:40:01', 1, 'Walk-in Client', '10.0000', '0.0000', NULL, '0.0000', '0.0000', '0.0000', '5%', '0.5000', '0.5000', '10.5000', 1, '1.0000', '10.5000', 1, NULL, NULL, '', 'paid', '0.0000', 1, '');
+INSERT INTO `tec_sales` (`id`, `date`, `customer_id`, `customer_name`, `total`, `product_discount`, `order_discount_id`, `order_discount`, `total_discount`, `product_tax`, `order_tax_id`, `order_tax`, `total_tax`, `grand_total`, `total_items`, `total_quantity`, `paid`, `created_by`, `updated_by`, `updated_at`, `note`, `status`, `rounding`, `store_id`, `hold_ref`) VALUES (2, '2022-06-17 16:48:15', 1, 'Walk-in Client', '10.0000', '0.0000', NULL, '0.0000', '0.0000', '0.0000', '5%', '0.5000', '0.5000', '10.5000', 1, '1.0000', '10.5000', 1, NULL, NULL, 'teste de qualidade ', 'paid', '0.0000', 1, '');
+INSERT INTO `tec_sales` (`id`, `date`, `customer_id`, `customer_name`, `total`, `product_discount`, `order_discount_id`, `order_discount`, `total_discount`, `product_tax`, `order_tax_id`, `order_tax`, `total_tax`, `grand_total`, `total_items`, `total_quantity`, `paid`, `created_by`, `updated_by`, `updated_at`, `note`, `status`, `rounding`, `store_id`, `hold_ref`) VALUES (3, '2022-06-17 18:40:05', 1, 'Walk-in Client', '20.0000', '0.0000', '5', '5.0000', '5.0000', '0.0000', '5%', '0.7500', '0.7500', '15.7500', 1, '2.0000', '16.0000', 1, NULL, NULL, '', 'paid', '0.2500', 1, '');
+INSERT INTO `tec_sales` (`id`, `date`, `customer_id`, `customer_name`, `total`, `product_discount`, `order_discount_id`, `order_discount`, `total_discount`, `product_tax`, `order_tax_id`, `order_tax`, `total_tax`, `grand_total`, `total_items`, `total_quantity`, `paid`, `created_by`, `updated_by`, `updated_at`, `note`, `status`, `rounding`, `store_id`, `hold_ref`) VALUES (4, '2022-06-17 18:41:09', 1, 'Walk-in Client', '30.0000', '0.0000', NULL, '0.0000', '0.0000', '0.0000', '5%', '1.5000', '1.5000', '31.5000', 1, '3.0000', '31.5000', 1, NULL, NULL, '', 'paid', '0.0000', 1, '');
+INSERT INTO `tec_sales` (`id`, `date`, `customer_id`, `customer_name`, `total`, `product_discount`, `order_discount_id`, `order_discount`, `total_discount`, `product_tax`, `order_tax_id`, `order_tax`, `total_tax`, `grand_total`, `total_items`, `total_quantity`, `paid`, `created_by`, `updated_by`, `updated_at`, `note`, `status`, `rounding`, `store_id`, `hold_ref`) VALUES (5, '2022-09-24 12:59:58', 1, 'Walk-in Client', '10.0000', '0.0000', '1', '1.0000', '1.0000', '0.0000', '5%', '0.4500', '0.4500', '9.4500', 1, '1.0000', '9.5000', 1, NULL, NULL, '', 'paid', '0.0500', 1, '');
+INSERT INTO `tec_sales` (`id`, `date`, `customer_id`, `customer_name`, `total`, `product_discount`, `order_discount_id`, `order_discount`, `total_discount`, `product_tax`, `order_tax_id`, `order_tax`, `total_tax`, `grand_total`, `total_items`, `total_quantity`, `paid`, `created_by`, `updated_by`, `updated_at`, `note`, `status`, `rounding`, `store_id`, `hold_ref`) VALUES (6, '2022-09-24 13:17:56', 1, 'Walk-in Client', '10.0000', '0.0000', NULL, '0.0000', '0.0000', '0.0000', '5%', '0.5000', '0.5000', '10.5000', 1, '1.0000', '10.5000', 1, NULL, NULL, '', 'paid', '0.0000', 1, '');
+INSERT INTO `tec_sales` (`id`, `date`, `customer_id`, `customer_name`, `total`, `product_discount`, `order_discount_id`, `order_discount`, `total_discount`, `product_tax`, `order_tax_id`, `order_tax`, `total_tax`, `grand_total`, `total_items`, `total_quantity`, `paid`, `created_by`, `updated_by`, `updated_at`, `note`, `status`, `rounding`, `store_id`, `hold_ref`) VALUES (7, '2022-09-24 13:40:29', 1, 'Walk-in Client', '100.0000', '0.0000', NULL, '0.0000', '0.0000', '0.0000', '0%', '0.0000', '0.0000', '100.0000', 1, '5.0000', '100.0000', 1, NULL, NULL, '', 'paid', '0.0000', 1, '');
+INSERT INTO `tec_sales` (`id`, `date`, `customer_id`, `customer_name`, `total`, `product_discount`, `order_discount_id`, `order_discount`, `total_discount`, `product_tax`, `order_tax_id`, `order_tax`, `total_tax`, `grand_total`, `total_items`, `total_quantity`, `paid`, `created_by`, `updated_by`, `updated_at`, `note`, `status`, `rounding`, `store_id`, `hold_ref`) VALUES (8, '2022-09-24 20:43:57', 1, 'Walk-in Client', '340.0000', '0.0000', NULL, '0.0000', '0.0000', '0.0000', '5%', '17.0000', '17.0000', '357.0000', 2, '32.0000', '357.0000', 1, NULL, NULL, '', 'paid', '0.0000', 1, '');
+INSERT INTO `tec_sales` (`id`, `date`, `customer_id`, `customer_name`, `total`, `product_discount`, `order_discount_id`, `order_discount`, `total_discount`, `product_tax`, `order_tax_id`, `order_tax`, `total_tax`, `grand_total`, `total_items`, `total_quantity`, `paid`, `created_by`, `updated_by`, `updated_at`, `note`, `status`, `rounding`, `store_id`, `hold_ref`) VALUES (9, '2022-09-26 10:12:36', 1, 'Walk-in Client', '10.0000', '0.0000', NULL, '0.0000', '0.0000', '0.0000', '5%', '0.5000', '0.5000', '10.5000', 1, '1.0000', '10.5000', 1, NULL, NULL, '', 'paid', '0.0000', 1, '');
+INSERT INTO `tec_sales` (`id`, `date`, `customer_id`, `customer_name`, `total`, `product_discount`, `order_discount_id`, `order_discount`, `total_discount`, `product_tax`, `order_tax_id`, `order_tax`, `total_tax`, `grand_total`, `total_items`, `total_quantity`, `paid`, `created_by`, `updated_by`, `updated_at`, `note`, `status`, `rounding`, `store_id`, `hold_ref`) VALUES (10, '2022-09-26 10:18:21', 1, 'Walk-in Client', '10.0000', '0.0000', NULL, '0.0000', '0.0000', '0.0000', '5%', '0.5000', '0.5000', '10.5000', 1, '1.0000', '10.5000', 1, NULL, NULL, '', 'paid', '0.0000', 1, '');
+INSERT INTO `tec_sales` (`id`, `date`, `customer_id`, `customer_name`, `total`, `product_discount`, `order_discount_id`, `order_discount`, `total_discount`, `product_tax`, `order_tax_id`, `order_tax`, `total_tax`, `grand_total`, `total_items`, `total_quantity`, `paid`, `created_by`, `updated_by`, `updated_at`, `note`, `status`, `rounding`, `store_id`, `hold_ref`) VALUES (11, '2022-09-26 10:20:35', 1, 'Walk-in Client', '10.0000', '0.0000', NULL, '0.0000', '0.0000', '0.0000', '5%', '0.5000', '0.5000', '10.5000', 1, '1.0000', '10.5000', 1, NULL, NULL, '', 'paid', '0.0000', 1, '');
+INSERT INTO `tec_sales` (`id`, `date`, `customer_id`, `customer_name`, `total`, `product_discount`, `order_discount_id`, `order_discount`, `total_discount`, `product_tax`, `order_tax_id`, `order_tax`, `total_tax`, `grand_total`, `total_items`, `total_quantity`, `paid`, `created_by`, `updated_by`, `updated_at`, `note`, `status`, `rounding`, `store_id`, `hold_ref`) VALUES (12, '2022-09-26 21:23:00', 1, 'Walk-in Client', '10.0000', '0.0000', NULL, '0.0000', '0.0000', '0.0000', '5%', '0.5000', '0.5000', '10.5000', 1, '1.0000', '10.5000', 1, NULL, NULL, '', 'paid', '0.0000', 1, '');
+INSERT INTO `tec_sales` (`id`, `date`, `customer_id`, `customer_name`, `total`, `product_discount`, `order_discount_id`, `order_discount`, `total_discount`, `product_tax`, `order_tax_id`, `order_tax`, `total_tax`, `grand_total`, `total_items`, `total_quantity`, `paid`, `created_by`, `updated_by`, `updated_at`, `note`, `status`, `rounding`, `store_id`, `hold_ref`) VALUES (13, '2022-09-26 21:23:24', 1, 'Walk-in Client', '10.0000', '0.0000', NULL, '0.0000', '0.0000', '0.0000', '5%', '0.5000', '0.5000', '10.5000', 1, '1.0000', '10.5000', 1, NULL, NULL, '', 'paid', '0.0000', 1, '');
+INSERT INTO `tec_sales` (`id`, `date`, `customer_id`, `customer_name`, `total`, `product_discount`, `order_discount_id`, `order_discount`, `total_discount`, `product_tax`, `order_tax_id`, `order_tax`, `total_tax`, `grand_total`, `total_items`, `total_quantity`, `paid`, `created_by`, `updated_by`, `updated_at`, `note`, `status`, `rounding`, `store_id`, `hold_ref`) VALUES (14, '2023-01-12 11:23:08', 1, 'Walk-in Client', '10.0000', '0.0000', NULL, '0.0000', '0.0000', '0.0000', '0%', '0.0000', '0.0000', '10.0000', 1, '1.0000', '10.0000', 1, NULL, NULL, '', 'paid', '0.0000', 1, '');
+
+
+#
+# TABLE STRUCTURE FOR: tec_sessions
+#
+
+DROP TABLE IF EXISTS `tec_sessions`;
+
+CREATE TABLE `tec_sessions` (
+  `id` varchar(40) NOT NULL,
+  `ip_address` varchar(45) NOT NULL,
+  `timestamp` int(10) unsigned NOT NULL DEFAULT 0,
+  `data` blob NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ci_sessions_timestamp` (`timestamp`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('00r86t40g3qjdfc87upq7lur99b96v48', '10.0.0.106', 1664117544, '__ci_last_regenerate|i:1664117322;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('0abdf4il7km8a622gvcs6d9lpj0slk28', '10.0.0.101', 1664118366, '__ci_last_regenerate|i:1664118366;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1664063957\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|i:1;has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('0cu5tiogtrisdhb7989589c79i4q1klv', '127.0.0.1', 1665200071, '__ci_last_regenerate|i:1665200034;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1665013221\";last_ip|s:9:\"127.0.0.1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('0qn8rs7kdh009vmbp9mjc8t8p3f7oso1', '127.0.0.1', 1673533695, '__ci_last_regenerate|i:1673533695;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1667065762\";last_ip|s:9:\"127.0.0.1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('1cnusj45135pis7tlqkrtsc8nqmq2img', '127.0.0.1', 1667065727, '__ci_last_regenerate|i:1667065696;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1667065485\";last_ip|s:9:\"127.0.0.1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('1l8uo4sda38efgr17af1lb7mv8ko6g9u', '192.168.137.1', 1664115077, '__ci_last_regenerate|i:1664115077;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('1ph97nbfhsfmhf7ac0v711lktlcmqsgc', '10.0.0.106', 1664124491, '__ci_last_regenerate|i:1664124491;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1664123824\";last_ip|s:10:\"10.0.0.106\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('34dfh3ln28qcjd5ij1k62tdoi6vr5j5s', '127.0.0.1', 1667066702, '__ci_last_regenerate|i:1667066702;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1667065708\";last_ip|s:9:\"127.0.0.1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('3eoue4p1vvtqbt3f745k8ghkkvs5ibcm', '10.0.0.106', 1664198282, '__ci_last_regenerate|i:1664198282;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1664197864\";last_ip|s:10:\"10.0.0.106\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|i:1;has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";rmspos|i:1;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('3lpvvkl9li4ab69a9el8elebjf4tdi64', '10.0.0.106', 1664163622, '__ci_last_regenerate|i:1664163622;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('4ff0ropda35d42dnfj5uoo06rvl4eboo', '192.168.137.5', 1664115093, '__ci_last_regenerate|i:1664115093;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('4fk4t0b648ha3o7r9c5fpedc284o9k1n', '127.0.0.1', 1673530523, '__ci_last_regenerate|i:1673530523;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1667065762\";last_ip|s:9:\"127.0.0.1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;message|s:41:\"<p>Você está conectado com sucesso.</p>\";__ci_vars|a:1:{s:7:\"message\";s:3:\"old\";}register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('4rs89lan6ftj4r03m698mb8v7bsbtmle', '10.0.0.106', 1664166527, '__ci_last_regenerate|i:1664166461;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1664166240\";last_ip|s:10:\"10.0.0.106\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;message|s:41:\"<p>Você está conectado com sucesso.</p>\";__ci_vars|a:1:{s:7:\"message\";s:3:\"old\";}register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('4unbu7d3cqgbttq85d851rsjhsrp8mmg', '10.0.0.106', 1664127571, '__ci_last_regenerate|i:1664127571;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('5h3qkfdhlj9rfob7kigh5lrna95vmv4n', '127.0.0.1', 1667067875, '__ci_last_regenerate|i:1667067875;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1667065708\";last_ip|s:9:\"127.0.0.1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|i:1;has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('5r54kr3bknbektbfubsfq3f8ve6gmhlf', '10.0.0.132', 1664120679, '__ci_last_regenerate|i:1664120679;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1664117660\";last_ip|s:10:\"10.0.0.101\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|i:1;has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('67j14dge2kkvir2fgvfqq9q35j46li4s', '10.0.0.101', 1664164089, '__ci_last_regenerate|i:1664164089;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('6m67rjce6ca267gghp0lc6uvaa08lm92', '10.0.0.106', 1664117218, '__ci_last_regenerate|i:1664117063;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('6tif5247jb2k82rlt84ts6onfcgq43cc', '10.0.0.106', 1664196715, '__ci_last_regenerate|i:1664196715;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1664196451\";last_ip|s:10:\"10.0.0.106\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('6tqm61hlabboe0qj1tj1iquevdi3fai2', '127.0.0.1', 1664164086, '__ci_last_regenerate|i:1664164086;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('6u8jmdh45js6hvne4sku57h8g77sch86', '10.0.0.106', 1664166240, '__ci_last_regenerate|i:1664166240;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('74d9d5c3o572vh27iklev5bjnpa6pd4v', '10.0.0.106', 1664160627, '__ci_last_regenerate|i:1664160627;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('75k5ke1lhedsuq61q7aatqg8vcc4cjsd', '127.0.0.1', 1673533388, '__ci_last_regenerate|i:1673533388;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1667065762\";last_ip|s:9:\"127.0.0.1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|i:1;has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('7fegbirl78qptmtfnvhbe30u4e1ruphe', '127.0.0.1', 1664117035, '__ci_last_regenerate|i:1664117035;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('7mr9nud6qehml3vcp8vt4pmlt50g6qk3', '127.0.0.1', 1664159796, '__ci_last_regenerate|i:1664159796;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('7p52iqhub11540usj44tvma98addokp2', '10.0.0.106', 1664160293, '__ci_last_regenerate|i:1664160293;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('86223spr0fpugrkt4jnag6j7hs19hdlh', '127.0.0.1', 1667010925, '__ci_last_regenerate|i:1667010904;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1665200052\";last_ip|s:9:\"127.0.0.1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;message|s:41:\"<p>Você está conectado com sucesso.</p>\";__ci_vars|a:1:{s:7:\"message\";s:3:\"old\";}register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('8o368453m9f0lijbimjfgndqb5ok8pmp', '10.0.0.101', 1664119483, '__ci_last_regenerate|i:1664119481;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1664063957\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|i:1;has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('932egiu2cqrbjggv52e15u0024rv4c3t', '10.0.0.101', 1664199909, '__ci_last_regenerate|i:1664199627;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1664199450\";last_ip|s:10:\"10.0.0.106\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('99s8djdfcqvuf819u21ffoqncqbbrlsi', '10.0.0.101', 1664117883, '__ci_last_regenerate|i:1664117883;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1664063957\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|i:1;has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('9a9cspb1qhd0l2hs7kraifdjii6196st', '127.0.0.1', 1664238991, '__ci_last_regenerate|i:1664238985;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('9lv4en17qvnosmio8f77m671vj59tgmr', '127.0.0.1', 1673528513, '__ci_last_regenerate|i:1673528513;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('9q2h7grhf0ntuid4ep3qpmnlgni42qup', '10.0.0.101', 1664164616, '__ci_last_regenerate|i:1664164616;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('9vhlvlfvsajjfffch6se6p4ef2k6l6i7', '127.0.0.1', 1667067875, '__ci_last_regenerate|i:1667067875;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1667065708\";last_ip|s:9:\"127.0.0.1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('aejk6tdvto7f7na8s8s11if328bh7nl9', '10.0.0.106', 1664161546, '__ci_last_regenerate|i:1664161546;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('b02opqd1vusbhlce5mbro26bhrebt0qs', '127.0.0.1', 1664117237, '__ci_last_regenerate|i:1664117218;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('b3eagkp7u9qv5g24kmpj9se9lsgile6k', '10.0.0.106', 1664165561, '__ci_last_regenerate|i:1664165561;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1664164924\";last_ip|s:10:\"10.0.0.106\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;message|s:41:\"<p>Você está conectado com sucesso.</p>\";__ci_vars|a:1:{s:7:\"message\";s:3:\"old\";}register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('bdu2kj8nqsgcirofggko1n7hdeam3cd6', '10.0.0.106', 1664196751, '__ci_last_regenerate|i:1664196715;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1664196484\";last_ip|s:10:\"10.0.0.106\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('cd3018sjm8v02a6dvni5cd92oentjkrv', '127.0.0.1', 1673528719, '__ci_last_regenerate|i:1673528719;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1667065762\";last_ip|s:9:\"127.0.0.1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|N;has_store_id|N;message|s:41:\"<p>Você está conectado com sucesso.</p>\";__ci_vars|a:1:{s:7:\"message\";s:3:\"new\";}');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('d9rmmq475n06h2oni6i3rtbus2psthpv', '127.0.0.1', 1664199443, '__ci_last_regenerate|i:1664199443;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('dnkeimhbvaievenhb2nvv1ogkg1vm2ep', '10.0.0.101', 1664199627, '__ci_last_regenerate|i:1664199627;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('ek77tgtlrmvkjci1l4l7vsijf62ivdr3', '192.168.137.163', 1664116608, '__ci_last_regenerate|i:1664116608;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('enm1f0d95o2bqblqfkqk1i9o3q1ougck', '10.0.0.106', 1664197863, '__ci_last_regenerate|i:1664197863;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('eqh8qreepjfqtav3tcckd51vanmrv43e', '10.0.0.106', 1664197917, '__ci_last_regenerate|i:1664197917;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1664197193\";last_ip|s:10:\"10.0.0.106\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|i:1;has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('f0rk5n2kkohbcd6gknm0cvuf2oo75bnq', '127.0.0.1', 1664239349, '__ci_last_regenerate|i:1664239349;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1664238975\";last_ip|s:9:\"127.0.0.1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|i:1;has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('f71u6a8kq4t5cotndhesn9bng2gj1cnn', '127.0.0.1', 1673533078, '__ci_last_regenerate|i:1673533078;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1667065762\";last_ip|s:9:\"127.0.0.1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('fel1pnrosdc94pm24q0rft49ln4dq7fi', '127.0.0.1', 1664239560, '__ci_last_regenerate|i:1664239560;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('fvt21flguui0ggn0t1d0do1vg1f8ieq7', '127.0.0.1', 1664238873, '__ci_last_regenerate|i:1664238873;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1664238136\";last_ip|s:9:\"127.0.0.1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;message|s:41:\"<p>Você está conectado com sucesso.</p>\";__ci_vars|a:1:{s:7:\"message\";s:3:\"old\";}register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('g5ll2n9mrckj57d4an45l9kgpu381uc3', '10.0.0.106', 1664114133, '__ci_last_regenerate|i:1664114124;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('g651hvsn6d71vqcpno12j2jktvcncsro', '10.0.0.106', 1664160964, '__ci_last_regenerate|i:1664160964;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('gpi8vji69gfl2f5gpscqu9kk2sacslpo', '192.168.137.163', 1664116608, '__ci_last_regenerate|i:1664116608;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('h5797nqme6g4ftlklq31vjgoaoglfa5n', '127.0.0.1', 1664114843, '__ci_last_regenerate|i:1664114843;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('hkmt3tkl7lkhdkt6pjobjtp2hocro2h9', '127.0.0.1', 1664123681, '__ci_last_regenerate|i:1664123681;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('hl85es2grdmh4rv12co4iss1t5g70had', '10.0.0.106', 1664164923, '__ci_last_regenerate|i:1664164923;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('i8od0sdmh1ovg98muhpsepkl6n5oqe7u', '10.0.0.106', 1664163068, '__ci_last_regenerate|i:1664163068;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('ikko9vptvinsu40vgbomlr9lvqeh372i', '10.0.0.106', 1664128640, '__ci_last_regenerate|i:1664128640;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('islkkqe28teegda1qv7863a7ovbdkufi', '127.0.0.1', 1667065409, '__ci_last_regenerate|i:1667065405;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1667010924\";last_ip|s:9:\"127.0.0.1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('japv5nbfh9h03bmthhoduk5ndjf7c8tf', '127.0.0.1', 1665013407, '__ci_last_regenerate|i:1665013257;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('jdo7o1p7v30sfup0qt08ihrvr6rojlnr', '10.0.0.101', 1664164093, '__ci_last_regenerate|i:1664164089;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('jmmku5eaoobnpahnqceibt0m5fuguvak', '10.0.0.106', 1664166643, '__ci_last_regenerate|i:1664166639;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1664166527\";last_ip|s:10:\"10.0.0.106\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;message|s:41:\"<p>Você está conectado com sucesso.</p>\";__ci_vars|a:1:{s:7:\"message\";s:3:\"old\";}register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('jtlsp1b6j05bcedhs4tk48iv47t5296c', '127.0.0.1', 1673533749, '__ci_last_regenerate|i:1673533695;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1667065762\";last_ip|s:9:\"127.0.0.1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('k41o6po4e52nad2pok0cgvjeilmmqnbe', '127.0.0.1', 1667064900, '__ci_last_regenerate|i:1667064900;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1667010924\";last_ip|s:9:\"127.0.0.1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('k8nja5m3kjehp9f63sduljfes1uc2627', '127.0.0.1', 1664117248, '__ci_last_regenerate|i:1664117035;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('lkhjju4g294570d2i4es0l8vjp022eis', '10.0.0.106', 1664199444, '__ci_last_regenerate|i:1664199444;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1664197557\";last_ip|s:10:\"10.0.0.106\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('mef8s9b1k4v9rn2k4ht0vklio22f985u', '10.0.0.101', 1664120085, '__ci_last_regenerate|i:1664119871;identity|s:24:\"vendedor@edsoncosta.tech\";username|s:8:\"vendedor\";email|s:24:\"vendedor@edsoncosta.tech\";user_id|s:1:\"2\";first_name|s:6:\"Caixa \";last_name|s:10:\"De entrada\";created_on|s:20:\"25/Sep/2022 12:25 PM\";old_last_login|s:10:\"1664119716\";last_ip|s:10:\"10.0.0.101\";avatar|N;gender|s:6:\"female\";group_id|s:1:\"2\";store_id|i:1;has_store_id|s:1:\"1\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('mibp934vkoou1c7nk010bmm5nj2um6f2', '10.0.0.106', 1664164392, '__ci_last_regenerate|i:1664164392;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('mj0tomcnm8trmgetf01p649rf14m7js6', '10.0.0.106', 1664116619, '__ci_last_regenerate|i:1664116619;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('ms686ceesctbbo8t0qbl5qh3l94si3o3', '10.0.0.106', 1664199450, '__ci_last_regenerate|i:1664199444;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1664198984\";last_ip|s:10:\"10.0.0.101\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";message|s:41:\"<p>Você está conectado com sucesso.</p>\";__ci_vars|a:1:{s:7:\"message\";s:3:\"old\";}');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('n7usr0n4ndmj0n8dvrirnoi401iad9k4', '10.0.0.132', 1664120797, '__ci_last_regenerate|i:1664120679;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1664117660\";last_ip|s:10:\"10.0.0.101\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('np5tjd1tpf9b0org8f2j57unvi3i5bme', '127.0.0.1', 1667065405, '__ci_last_regenerate|i:1667065405;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1667010924\";last_ip|s:9:\"127.0.0.1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('oo0kibomd9n7shku2k453q3api9qvn07', '10.0.0.132', 1664119095, '__ci_last_regenerate|i:1664119095;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('oqr2hr99lfqs632og51ieek9bml9pstb', '10.0.0.106', 1664197512, '__ci_last_regenerate|i:1664197512;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1664197167\";last_ip|s:10:\"10.0.0.106\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('p4bnpaafrb0j4842gee1am08fjfeneol', '10.0.0.106', 1664131744, '__ci_last_regenerate|i:1664131744;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1664123972\";last_ip|s:10:\"10.0.0.106\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('pk25fj3e9rlc97atqr7uuvs6kuuia9g9', '10.0.0.101', 1664166483, '__ci_last_regenerate|i:1664166483;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1664164605\";last_ip|s:10:\"10.0.0.106\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('pkuhktferbtr62ltm75ogij2mmss26qf', '10.0.0.106', 1664142205, '__ci_last_regenerate|i:1664142204;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1664128647\";last_ip|s:10:\"10.0.0.106\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('prpnajt30mlqjdr6ad42c1sj4qd5kiu8', '10.0.0.132', 1664120368, '__ci_last_regenerate|i:1664120368;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1664117660\";last_ip|s:10:\"10.0.0.101\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('ptm116ccejimoc94nkk2ragq0qboeo9h', '10.0.0.106', 1664164029, '__ci_last_regenerate|i:1664164029;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('qfsqcmoenr5dlb46jmt4pbkoaoslh789', '127.0.0.1', 1667065063, '__ci_last_regenerate|i:1667064913;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1667064611\";last_ip|s:9:\"127.0.0.1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('qgk0tf3t6dn1aeog7umhv93eo7jv54id', '10.0.0.101', 1664119868, '__ci_last_regenerate|i:1664119708;identity|s:24:\"vendedor@edsoncosta.tech\";username|s:8:\"vendedor\";email|s:24:\"vendedor@edsoncosta.tech\";user_id|s:1:\"2\";first_name|s:6:\"Caixa \";last_name|s:10:\"De entrada\";created_on|s:20:\"25/Sep/2022 12:25 PM\";old_last_login|s:10:\"1664119542\";last_ip|N;avatar|N;gender|s:6:\"female\";group_id|s:1:\"2\";store_id|i:1;has_store_id|s:1:\"1\";register_id|s:1:\"4\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-25 12:29:28\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('qme064ndrm6ge011ml36knjoh7rq2f53', '10.0.0.106', 1664114990, '__ci_last_regenerate|i:1664114990;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('qps7g0qu8o4n7dj2bj0l2t4p3igdgj0a', '127.0.0.1', 1673528494, '__ci_last_regenerate|i:1673528487;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('qt2s4go51jd16r700g8kis3404sg0p4e', '127.0.0.1', 1664117267, '__ci_last_regenerate|i:1664117267;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('qupthcn560g7hrna6elterb4rfkr04r1', '10.0.0.106', 1664166614, '__ci_last_regenerate|i:1664166614;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1664164943\";last_ip|s:10:\"10.0.0.106\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('r8cgq6srpdo8696d8fv0iddnvpo7j0o4', '10.0.0.106', 1664198588, '__ci_last_regenerate|i:1664198586;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1664197864\";last_ip|s:10:\"10.0.0.106\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";rmspos|i:1;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('rdmf1jp56stmtnjn5uhh3okr7jhtfggr', '127.0.0.1', 1664123683, '__ci_last_regenerate|i:1664123681;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('rf7o5kvbvc313curgkk3qljajp79p9fc', '10.0.0.106', 1664162002, '__ci_last_regenerate|i:1664162002;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('rk90n8t2gu8n75tjr1o4cc0qqot97bb9', '10.0.0.106', 1664162318, '__ci_last_regenerate|i:1664162318;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('s57arhhetu0hc2a5v76q5db37k3e8rac', '127.0.0.1', 1664116530, '__ci_last_regenerate|i:1664116530;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('set6dpltto0j540hp2s2gof2oid4tfeg', '10.0.0.106', 1664117573, '__ci_last_regenerate|i:1664117573;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('srl54b1ehji4trieihhgr6dgsp7a9prn', '10.0.0.106', 1664165926, '__ci_last_regenerate|i:1664165926;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1664164943\";last_ip|s:10:\"10.0.0.106\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";csrfkey|s:8:\"ScXVKJbD\";__ci_vars|a:2:{s:7:\"csrfkey\";s:3:\"new\";s:9:\"csrfvalue\";s:3:\"new\";}csrfvalue|s:20:\"J2Ceq0Hnj7h6VYQP1akc\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('t01tpglb3buse6782ihtqn8cv67urpld', '127.0.0.1', 1664199444, '__ci_last_regenerate|i:1664199443;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('tag8d646ckse3c9mlbnulata93remrgu', '127.0.0.1', 1664117218, '__ci_last_regenerate|i:1664117218;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('tdhm8tbcboeit99ngtm24kubci7idr2a', '10.0.0.106', 1664117063, '__ci_last_regenerate|i:1664117063;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('thhtgto2326klpbtk05lnbmarmvtsd6e', '10.0.0.106', 1664164031, '__ci_last_regenerate|i:1664164029;');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('tprtfgjisf2f3ts41muuhn236h76nifu', '10.0.0.106', 1664131744, '__ci_last_regenerate|i:1664131744;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1664123972\";last_ip|s:10:\"10.0.0.106\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;message|s:41:\"<p>Você está conectado com sucesso.</p>\";__ci_vars|a:1:{s:7:\"message\";s:3:\"old\";}register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('v26bosm1e7n7q8lbh20hc3t6e0obrbk3', '127.0.0.1', 1667065678, '__ci_last_regenerate|i:1667065464;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1667064947\";last_ip|s:9:\"127.0.0.1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('vjmhqf7ksgpumii864f776ho95a0jo05', '10.0.0.101', 1664166500, '__ci_last_regenerate|i:1664166483;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1664164605\";last_ip|s:10:\"10.0.0.106\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";error|s:38:\"<p>O login falhou, tente novamente</p>\";__ci_vars|a:1:{s:5:\"error\";s:3:\"old\";}');
+INSERT INTO `tec_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('vk71eun6dcnunlggh712su8gojn3pqvt', '10.0.0.106', 1664198622, '__ci_last_regenerate|i:1664198615;identity|s:21:\"admin@edsoncosta.tech\";username|s:5:\"admin\";email|s:21:\"admin@edsoncosta.tech\";user_id|s:1:\"1\";first_name|s:5:\"Admin\";last_name|s:5:\"Admin\";created_on|s:20:\"25/Jun/2015 12:59 AM\";old_last_login|s:10:\"1664197931\";last_ip|s:10:\"10.0.0.106\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";store_id|s:1:\"1\";has_store_id|N;message|s:41:\"<p>Você está conectado com sucesso.</p>\";__ci_vars|a:1:{s:7:\"message\";s:3:\"old\";}register_id|s:1:\"3\";cash_in_hand|s:8:\"100.0000\";register_open_time|s:19:\"2022-09-24 20:47:34\";');
+
+
+#
+# TABLE STRUCTURE FOR: tec_settings
+#
+
+DROP TABLE IF EXISTS `tec_settings`;
+
+CREATE TABLE `tec_settings` (
+  `setting_id` int(1) NOT NULL,
+  `logo` varchar(255) NOT NULL,
+  `site_name` varchar(55) NOT NULL,
+  `tel` varchar(20) NOT NULL,
+  `dateformat` varchar(20) DEFAULT NULL,
+  `timeformat` varchar(20) DEFAULT NULL,
+  `default_email` varchar(100) NOT NULL,
+  `language` varchar(20) NOT NULL,
+  `version` varchar(10) NOT NULL DEFAULT '1.0',
+  `theme` varchar(20) NOT NULL,
+  `timezone` varchar(255) NOT NULL DEFAULT '0',
+  `protocol` varchar(20) NOT NULL DEFAULT 'mail',
+  `smtp_host` varchar(255) DEFAULT NULL,
+  `smtp_user` varchar(100) DEFAULT NULL,
+  `smtp_pass` varchar(255) DEFAULT NULL,
+  `smtp_port` varchar(10) DEFAULT '25',
+  `smtp_crypto` varchar(5) DEFAULT NULL,
+  `mmode` tinyint(1) NOT NULL,
+  `captcha` tinyint(1) NOT NULL DEFAULT 1,
+  `mailpath` varchar(55) DEFAULT NULL,
+  `currency_prefix` varchar(3) NOT NULL,
+  `default_customer` int(11) NOT NULL,
+  `default_tax_rate` varchar(20) NOT NULL,
+  `rows_per_page` int(2) NOT NULL,
+  `total_rows` int(2) NOT NULL,
+  `header` varchar(1000) DEFAULT NULL,
+  `footer` varchar(1000) DEFAULT NULL,
+  `bsty` tinyint(4) NOT NULL,
+  `display_kb` tinyint(4) NOT NULL,
+  `default_category` int(11) NOT NULL,
+  `default_discount` varchar(20) NOT NULL,
+  `item_addition` tinyint(1) NOT NULL,
+  `barcode_symbology` varchar(55) DEFAULT NULL,
+  `pro_limit` tinyint(4) NOT NULL,
+  `decimals` tinyint(1) NOT NULL DEFAULT 2,
+  `thousands_sep` varchar(2) NOT NULL DEFAULT ',',
+  `decimals_sep` varchar(2) NOT NULL DEFAULT '.',
+  `focus_add_item` varchar(55) DEFAULT NULL,
+  `add_customer` varchar(55) DEFAULT NULL,
+  `toggle_category_slider` varchar(55) DEFAULT NULL,
+  `cancel_sale` varchar(55) DEFAULT NULL,
+  `suspend_sale` varchar(55) DEFAULT NULL,
+  `print_order` varchar(55) DEFAULT NULL,
+  `print_bill` varchar(55) DEFAULT NULL,
+  `finalize_sale` varchar(55) DEFAULT NULL,
+  `today_sale` varchar(55) DEFAULT NULL,
+  `open_hold_bills` varchar(55) DEFAULT NULL,
+  `close_register` varchar(55) DEFAULT NULL,
+  `java_applet` tinyint(1) NOT NULL,
+  `receipt_printer` varchar(55) DEFAULT NULL,
+  `pos_printers` varchar(255) DEFAULT NULL,
+  `cash_drawer_codes` varchar(55) DEFAULT NULL,
+  `char_per_line` tinyint(4) DEFAULT 42,
+  `rounding` tinyint(1) DEFAULT 0,
+  `pin_code` varchar(20) DEFAULT NULL,
+  `stripe` tinyint(1) DEFAULT NULL,
+  `stripe_secret_key` varchar(100) DEFAULT NULL,
+  `stripe_publishable_key` varchar(100) DEFAULT NULL,
+  `purchase_code` varchar(100) DEFAULT NULL,
+  `envato_username` varchar(50) DEFAULT NULL,
+  `theme_style` varchar(25) DEFAULT 'green',
+  `after_sale_page` tinyint(1) DEFAULT NULL,
+  `overselling` tinyint(1) DEFAULT 1,
+  `multi_store` tinyint(1) DEFAULT NULL,
+  `qty_decimals` tinyint(1) DEFAULT 2,
+  `symbol` varchar(55) DEFAULT NULL,
+  `sac` tinyint(1) DEFAULT 0,
+  `display_symbol` tinyint(1) DEFAULT NULL,
+  `remote_printing` tinyint(1) DEFAULT 1,
+  `printer` int(11) DEFAULT NULL,
+  `order_printers` varchar(55) DEFAULT NULL,
+  `auto_print` tinyint(1) DEFAULT 0,
+  `local_printers` tinyint(1) DEFAULT NULL,
+  `rtl` tinyint(1) DEFAULT NULL,
+  `print_img` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`setting_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `tec_settings` (`setting_id`, `logo`, `site_name`, `tel`, `dateformat`, `timeformat`, `default_email`, `language`, `version`, `theme`, `timezone`, `protocol`, `smtp_host`, `smtp_user`, `smtp_pass`, `smtp_port`, `smtp_crypto`, `mmode`, `captcha`, `mailpath`, `currency_prefix`, `default_customer`, `default_tax_rate`, `rows_per_page`, `total_rows`, `header`, `footer`, `bsty`, `display_kb`, `default_category`, `default_discount`, `item_addition`, `barcode_symbology`, `pro_limit`, `decimals`, `thousands_sep`, `decimals_sep`, `focus_add_item`, `add_customer`, `toggle_category_slider`, `cancel_sale`, `suspend_sale`, `print_order`, `print_bill`, `finalize_sale`, `today_sale`, `open_hold_bills`, `close_register`, `java_applet`, `receipt_printer`, `pos_printers`, `cash_drawer_codes`, `char_per_line`, `rounding`, `pin_code`, `stripe`, `stripe_secret_key`, `stripe_publishable_key`, `purchase_code`, `envato_username`, `theme_style`, `after_sale_page`, `overselling`, `multi_store`, `qty_decimals`, `symbol`, `sac`, `display_symbol`, `remote_printing`, `printer`, `order_printers`, `auto_print`, `local_printers`, `rtl`, `print_img`) VALUES (1, 'logo1.png', 'EC_ERP', '0105292122', 'j/M/Y', 'h:i A', 'noreply@spos.tecdiary.my', 'portuguese', '4.0.28', 'default', 'Asia/Kuala_Lumpur', 'mail', 'pop.gmail.com', 'noreply@spos.tecdiary.my', '', '25', '', 0, 0, NULL, 'BRL', 1, '5%', 10, 30, NULL, NULL, 3, 0, 1, '0', 1, NULL, 10, 2, ',', '.', 'ALT+F1', 'ALT+F2', 'ALT+F10', 'ALT+F5', 'ALT+F6', 'ALT+F11', 'ALT+F12', 'ALT+F8', 'Ctrl+F1', 'Ctrl+F2', 'ALT+F7', 0, '', '', '', 42, 2, '1234', 0, '', '', '', '', 'green', 0, 1, 0, 2, 'R$', 0, 1, 1, 1, 'null', 0, 1, 0, 0);
+
+
+#
+# TABLE STRUCTURE FOR: tec_stores
+#
+
+DROP TABLE IF EXISTS `tec_stores`;
+
+CREATE TABLE `tec_stores` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `code` varchar(20) NOT NULL,
+  `logo` varchar(40) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `phone` varchar(15) NOT NULL,
+  `address1` varchar(50) DEFAULT NULL,
+  `address2` varchar(50) DEFAULT NULL,
+  `city` varchar(20) DEFAULT NULL,
+  `state` varchar(20) DEFAULT NULL,
+  `postal_code` varchar(8) DEFAULT NULL,
+  `country` varchar(25) DEFAULT NULL,
+  `currency_code` varchar(3) DEFAULT NULL,
+  `receipt_header` text DEFAULT NULL,
+  `receipt_footer` text DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+INSERT INTO `tec_stores` (`id`, `name`, `code`, `logo`, `email`, `phone`, `address1`, `address2`, `city`, `state`, `postal_code`, `country`, `currency_code`, `receipt_header`, `receipt_footer`) VALUES (1, 'IDF PDV', 'IDF', 'logo.png', 'store@tecdiary.com', '012345678', 'Address Line 1', '', 'Petaling Jaya', 'Selangor', '46000', 'Malaysia', 'MYR', '', 'This is receipt footer for store');
+
+
+#
+# TABLE STRUCTURE FOR: tec_suppliers
+#
+
+DROP TABLE IF EXISTS `tec_suppliers`;
+
+CREATE TABLE `tec_suppliers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(55) NOT NULL,
+  `cf1` varchar(255) NOT NULL,
+  `cf2` varchar(255) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+INSERT INTO `tec_suppliers` (`id`, `name`, `cf1`, `cf2`, `phone`, `email`) VALUES (1, 'Test Supplier', '1', '2', '0123456789', 'supplier@tecdairy.com');
+
+
+#
+# TABLE STRUCTURE FOR: tec_suspended_items
+#
+
+DROP TABLE IF EXISTS `tec_suspended_items`;
+
+CREATE TABLE `tec_suspended_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `suspend_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `quantity` decimal(15,4) NOT NULL,
+  `unit_price` decimal(25,4) NOT NULL,
+  `net_unit_price` decimal(25,4) NOT NULL,
+  `discount` varchar(20) DEFAULT NULL,
+  `item_discount` decimal(25,4) DEFAULT NULL,
+  `tax` int(20) DEFAULT NULL,
+  `item_tax` decimal(25,4) DEFAULT NULL,
+  `subtotal` decimal(25,4) NOT NULL,
+  `real_unit_price` decimal(25,4) DEFAULT NULL,
+  `product_code` varchar(50) DEFAULT NULL,
+  `product_name` varchar(50) DEFAULT NULL,
+  `comment` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: tec_suspended_sales
+#
+
+DROP TABLE IF EXISTS `tec_suspended_sales`;
+
+CREATE TABLE `tec_suspended_sales` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` datetime NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `customer_name` varchar(55) NOT NULL,
+  `total` decimal(25,4) NOT NULL,
+  `product_discount` decimal(25,4) DEFAULT NULL,
+  `order_discount_id` varchar(20) DEFAULT NULL,
+  `order_discount` decimal(25,4) DEFAULT NULL,
+  `total_discount` decimal(25,4) DEFAULT NULL,
+  `product_tax` decimal(25,4) DEFAULT NULL,
+  `order_tax_id` varchar(20) DEFAULT NULL,
+  `order_tax` decimal(25,4) DEFAULT NULL,
+  `total_tax` decimal(25,4) DEFAULT NULL,
+  `grand_total` decimal(25,4) NOT NULL,
+  `total_items` int(11) DEFAULT NULL,
+  `total_quantity` decimal(15,4) DEFAULT NULL,
+  `paid` decimal(25,4) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `note` varchar(1000) DEFAULT NULL,
+  `hold_ref` varchar(255) DEFAULT NULL,
+  `store_id` int(11) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: tec_user_logins
+#
+
+DROP TABLE IF EXISTS `tec_user_logins`;
+
+CREATE TABLE `tec_user_logins` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `company_id` int(11) DEFAULT NULL,
+  `ip_address` varbinary(16) NOT NULL,
+  `login` varchar(100) NOT NULL,
+  `time` timestamp NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8;
+
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (1, 1, NULL, '80.23.121.114', 'admin@tecdiary.com', '2019-03-19 13:47:42');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (2, 1, NULL, '::1', 'admin@tecdiary.com', '2019-03-19 15:17:26');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (3, 1, NULL, '::1', 'admin@tecdiary.com', '2022-05-17 14:28:51');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (4, 1, NULL, '::1', 'admin@tecdiary.com', '2022-05-17 15:31:02');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (5, 1, NULL, '::1', 'admin@tecdiary.com', '2022-06-17 14:37:04');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (6, 1, NULL, '::1', 'admin@tecdiary.com', '2022-06-17 15:07:57');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (7, 1, NULL, '::1', 'admin@tecdiary.com', '2022-06-17 15:23:02');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (8, 1, NULL, '::1', 'admin@tecdiary.com', '2022-06-17 15:24:09');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (9, 1, NULL, '::1', 'admin@tecdiary.com', '2022-06-18 02:05:38');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (10, 1, NULL, '::1', 'admin@tecdiary.com', '2022-06-18 12:24:46');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (11, 1, NULL, '::1', 'admin@tecdiary.com', '2022-06-18 13:01:48');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (12, 1, NULL, '::1', 'admin@tecdiary.com', '2022-06-18 14:19:56');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (13, 1, NULL, '::1', 'admin@tecdiary.com', '2022-06-18 14:23:08');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (14, 1, NULL, '::1', 'admin@tecdiary.com', '2022-06-18 14:24:01');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (15, 1, NULL, '::1', 'admin@tecdiary.com', '2022-06-20 13:41:33');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (16, 1, NULL, '::1', 'admin@tecdiary.com', '2022-06-21 18:43:37');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (17, 1, NULL, '::1', 'admin@tecdiary.com', '2022-06-22 11:06:29');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (18, 1, NULL, '::1', 'admin@tecdiary.com', '2022-06-25 17:34:06');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (19, 1, NULL, '::1', 'admin@tecdiary.com', '2022-08-04 12:29:53');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (20, 1, NULL, '::1', 'admin@edsoncosta.tech', '2022-09-24 12:27:30');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (21, 1, NULL, '::1', 'admin@edsoncosta.tech', '2022-09-24 12:51:05');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (22, 1, NULL, '::1', 'admin@edsoncosta.tech', '2022-09-24 14:01:33');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (23, 1, NULL, '::1', 'admin@edsoncosta.tech', '2022-09-24 20:23:58');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (24, 1, NULL, '::1', 'admin@edsoncosta.tech', '2022-09-24 20:59:17');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (25, 1, NULL, '10.0.0.101', 'admin@edsoncosta.tech', '2022-09-25 11:54:20');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (26, 1, NULL, '10.0.0.132', 'admin@edsoncosta.tech', '2022-09-25 12:18:59');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (27, 2, NULL, '10.0.0.101', 'vendedor@edsoncosta.tech', '2022-09-25 12:28:36');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (28, 2, NULL, '10.0.0.101', 'vendedor@edsoncosta.tech', '2022-09-25 12:32:10');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (29, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-25 13:35:33');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (30, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-25 13:37:04');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (31, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-25 13:39:32');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (32, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-25 14:57:27');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (33, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-25 23:58:22');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (34, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-26 00:18:44');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (35, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-26 00:19:31');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (36, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-26 00:21:34');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (37, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-26 00:24:03');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (38, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-26 00:25:49');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (39, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-26 00:34:27');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (40, 1, NULL, '10.0.0.101', 'admin@edsoncosta.tech', '2022-09-26 00:39:28');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (41, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-26 00:40:27');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (42, 1, NULL, '10.0.0.101', 'admin@edsoncosta.tech', '2022-09-26 00:42:06');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (43, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-26 00:44:46');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (44, 1, NULL, '10.0.0.101', 'admin@edsoncosta.tech', '2022-09-26 00:48:53');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (45, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-26 00:53:12');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (46, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-26 00:56:27');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (47, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-26 00:56:46');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (48, 1, NULL, '10.0.0.101', 'admin@edsoncosta.tech', '2022-09-26 00:57:41');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (49, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-26 01:02:04');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (50, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-26 01:02:23');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (51, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-26 01:16:43');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (52, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-26 01:24:00');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (53, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-26 01:28:47');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (54, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-26 01:30:43');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (55, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-26 09:45:24');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (56, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-26 09:47:31');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (57, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-26 09:48:04');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (58, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-26 09:51:55');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (59, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-26 09:52:47');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (60, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-26 09:56:21');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (61, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-26 09:59:27');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (62, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-26 09:59:53');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (63, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-26 10:05:57');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (64, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-26 10:11:04');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (65, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-26 10:12:11');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (66, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-26 10:23:41');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (67, 1, NULL, '10.0.0.101', 'admin@edsoncosta.tech', '2022-09-26 10:26:36');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (68, 2, NULL, '10.0.0.101', 'vendedor@edsoncosta.tech', '2022-09-26 10:28:41');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (69, 1, NULL, '10.0.0.101', 'admin@edsoncosta.tech', '2022-09-26 10:29:44');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (70, 2, NULL, '10.0.0.101', 'vendedor@edsoncosta.tech', '2022-09-26 10:30:34');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (71, 1, NULL, '10.0.0.106', 'admin@edsoncosta.tech', '2022-09-26 10:37:30');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (72, 1, NULL, '10.0.0.101', 'admin@edsoncosta.tech', '2022-09-26 10:40:27');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (73, 1, NULL, '127.0.0.1', 'admin@edsoncosta.tech', '2022-09-26 21:22:16');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (74, 1, NULL, '127.0.0.1', 'admin@edsoncosta.tech', '2022-09-26 21:26:04');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (75, 1, NULL, '127.0.0.1', 'admin@edsoncosta.tech', '2022-09-26 21:36:15');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (76, 1, NULL, '127.0.0.1', 'admin@edsoncosta.tech', '2022-09-26 21:39:06');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (77, 2, NULL, '127.0.0.1', 'vendedor@edsoncosta.tech', '2022-09-26 21:42:48');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (78, 1, NULL, '127.0.0.1', 'admin@edsoncosta.tech', '2022-10-05 20:40:22');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (79, 1, NULL, '127.0.0.1', 'admin@edsoncosta.tech', '2022-10-08 00:34:12');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (80, 1, NULL, '127.0.0.1', 'admin@edsoncosta.tech', '2022-10-28 23:35:24');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (81, 1, NULL, '127.0.0.1', 'admin@edsoncosta.tech', '2022-10-29 14:30:11');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (82, 1, NULL, '127.0.0.1', 'admin@edsoncosta.tech', '2022-10-29 14:35:47');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (83, 1, NULL, '127.0.0.1', 'admin@edsoncosta.tech', '2022-10-29 14:44:45');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (84, 1, NULL, '127.0.0.1', 'admin@edsoncosta.tech', '2022-10-29 14:48:28');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (85, 1, NULL, '127.0.0.1', 'admin@edsoncosta.tech', '2022-10-29 14:49:22');
+INSERT INTO `tec_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES (86, 1, NULL, '127.0.0.1', 'admin@edsoncosta.tech', '2023-01-12 10:05:18');
+
+
+#
+# TABLE STRUCTURE FOR: tec_users
+#
+
+DROP TABLE IF EXISTS `tec_users`;
+
+CREATE TABLE `tec_users` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `last_ip_address` varbinary(45) DEFAULT NULL,
+  `ip_address` varbinary(45) DEFAULT NULL,
+  `username` varchar(100) NOT NULL,
+  `password` varchar(40) NOT NULL,
+  `salt` varchar(40) DEFAULT NULL,
+  `email` varchar(100) NOT NULL,
+  `activation_code` varchar(40) DEFAULT NULL,
+  `forgotten_password_code` varchar(40) DEFAULT NULL,
+  `forgotten_password_time` int(11) unsigned DEFAULT NULL,
+  `remember_code` varchar(40) DEFAULT NULL,
+  `created_on` int(11) unsigned NOT NULL,
+  `last_login` int(11) unsigned DEFAULT NULL,
+  `active` tinyint(1) unsigned DEFAULT NULL,
+  `first_name` varchar(50) DEFAULT NULL,
+  `last_name` varchar(50) DEFAULT NULL,
+  `company` varchar(100) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `avatar` varchar(55) DEFAULT NULL,
+  `gender` varchar(20) DEFAULT NULL,
+  `group_id` int(11) unsigned NOT NULL DEFAULT 2,
+  `store_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `group_id` (`group_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+INSERT INTO `tec_users` (`id`, `last_ip_address`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `avatar`, `gender`, `group_id`, `store_id`) VALUES (1, '127.0.0.1', '127.0.0.1', 'admin', 'fe941d48eb1fbce34b4588ae500861570fb0e398', NULL, 'admin@edsoncosta.tech', NULL, NULL, NULL, 'b2d2c8fd5d9a5f19901279ac74cec92dc15ac970', 1435204774, 1673528718, 1, 'Admin', 'Admin', 'Tecdiary', '012345678', NULL, 'male', 1, NULL);
+INSERT INTO `tec_users` (`id`, `last_ip_address`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `avatar`, `gender`, `group_id`, `store_id`) VALUES (2, '127.0.0.1', '10.0.0.101', 'vendedor', '16782b61b6b8c4d7f711724fb4b42f55cdc556de', NULL, 'vendedor@edsoncosta.tech', NULL, NULL, NULL, '294c8b6632f94a402c0a11ce0545763c6a67434d', 1664119542, 1664239368, 1, 'Caixa ', 'De entrada', NULL, '0000000', NULL, 'female', 2, 1);
+
+

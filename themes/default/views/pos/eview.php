@@ -230,6 +230,7 @@ if ($modal) {
                                 <div class="btn-group" role="group">
                                     <a class="btn btn-block btn-success" href="#" id="email"><?= lang("email"); ?></a>
                                 </div>
+
                                 <div class="btn-group" role="group">
                                     <button type="button" class="btn btn-default" data-dismiss="modal"><?= lang('close'); ?></button>
                                 </div>
