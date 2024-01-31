@@ -233,7 +233,27 @@ if ($modal) {
                                 ?>
                             </span>
                             <span class="pull-left col-xs-12"><a class="btn btn-block btn-success" href="#" id="email"><?= lang("email"); ?></a></span>
-                            <span class="pull-left col-xs-12"><a class="btn btn-block btn-success" href="#" id="email">WhatsApp</a></span>
+                            <span class="pull-left col-xs-12"><a class="btn btn-block btn-success" id="whatsapp">WhatsApp</a></span>
+                            <div class="modal fade" id="whatsappModal" tabindex="-1" role="dialog" aria-labelledby="whatsappModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="whatsappModalLabel">WhatsApp</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Digite o número de telefoner:</p>
+                <input type="tel" class="form-control" id="whatsappPhoneNumber" placeholder="(91)900000000">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-success" id="sendWhatsApp">Enviar WhatsApp</button>
+            </div>
+        </div>
+    </div>
+</div>
                             <span class="col-xs-12">
                                 <a class="btn btn-block btn-warning" href="<?= site_url('pos'); ?>"><?= lang("back_to_pos"); ?></a>
                             </span>
@@ -260,6 +280,56 @@ if ($modal) {
                     <?php
                 }
                 ?>
+                <script type="text/javascript">
+    $(document).ready(function () {
+        // ... existing code ...
+
+        $('#whatsapp').click(function () {
+            $('#whatsappModal').modal('show');
+        });
+
+        $('#sendWhatsApp').click(function () {
+            // Get the phone number from the modal input
+            var phoneNumber = $('#whatsappPhoneNumber').val();
+
+            // Validate phone number (you may need to improve this validation)
+            if (!phoneNumber || !/^\d+$/.test(phoneNumber)) {
+                alert('Número de telefone inválido.Por favor insira um número de telefone válido.');
+                return;
+            }
+
+            var message = "Referência de venda: <?= $inv->id ?>\n";
+            message += "Cliente: <?= $inv->customer_name ?>\n";
+            message += "Data da venda: <?= $this->tec->hrld($inv->date) ?>\n";
+            message += "Vendedor: <?= $created_by->first_name." ".$created_by->last_name ?>\n";
+            message += "Total geral: <?= $this->tec->formatMoney($inv->grand_total) ?>\n";
+            message += "######\n"; // Separator for table header
+
+            // Table header
+            message += "*Produto* | *Quantidade* | *Preço Unitário* | *Subtotal*\n";
+
+            // Loop through each product and add its details to the message
+            <?php foreach ($rows as $row) { ?>
+                message += "<?= $row->product_name ?> | <?= $this->tec->formatQuantity($row->quantity) ?> | <?= $this->tec->formatMoney($row->net_unit_price + ($row->item_tax / $row->quantity)) ?> | <?= $this->tec->formatMoney($row->subtotal) ?>\n\n";
+            <?php } ?>
+            
+            message += "######\n"; // Separator for table footer
+            
+
+            // Generate a WhatsApp URL
+            var whatsappURL = "https://wa.me/55" + phoneNumber + "?text=" + encodeURIComponent(message);
+
+            // Open the WhatsApp URL in a new tab or window
+            window.open(whatsappURL, '_blank');
+
+            // Close the modal after sending
+            $('#whatsappModal').modal('hide');
+        });
+
+        // ... existing code ...
+    });
+</script>
+
                 <script type="text/javascript">
                     $(document).ready(function () {
                         $('#print').click(function (e) {
