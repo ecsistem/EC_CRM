@@ -28,13 +28,13 @@
             <div class="inner cover">
                 <h1 class="cover-heading">Agradecemos a sua visita!!!</h1>
                 <p class="lead">Por favor, venha novamente.</p>
-                <div id="relogio-ditital">
-                <div id="horas"></div>
-                <div id="minutos"></div>
-                <div id="segundos"></div>
-                <div id="ampm"></div>
-                </div>
-                <p class="lead">Se você estiver feliz com nossos serviços, conte seus amigos de outra forma, informe -nos para que possamos melhorar.</p>
+                <div id="relogio-ditital" style="font-size: 36px; display: flex; justify-content: center; margin: 10px, 0px;">
+                <div id="horas" style=" text-align: center;"></div>
+                <div id="minutos" style=" text-align: center;"></div>
+                <div id="segundos" style=" text-align: center;"></div>
+                <div id="ampm" style=" text-align: center;"></div>
+</div>
+                <p class="lead">Se você estiver feliz com nossos serviços, conte seus amigos de outra forma, informe-nos para que possamos melhorar.</p>
 
                 <!-- <small>
                     <code>
